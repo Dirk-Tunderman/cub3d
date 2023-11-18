@@ -1,5 +1,5 @@
 NAME = cub3d
-SRC = main.cpp
+SRC = main.c error.c input_check.c
 VPATH = src
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
 OBJ_DIR = obj
