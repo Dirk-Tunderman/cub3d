@@ -5,5 +5,7 @@
 int		main(int argc, char **argv);
 //check
 int		check_input(int argc, char **argv);
+//error
 
+void	print_error(char *s);
 #endif
