@@ -1,28 +1,32 @@
 NAME = cub3d
 LIBMLX = ./MLX42
+LIBFT = libft/libft.a
 SRC = main.c error.c input_check.c
 VPATH = src
-OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
+OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 OBJ_DIR = obj
-FLAGS = -Wall -Wextra -Werror -0fastß
-LIBS = $(LIBMLX)/build/libmlx42.a -ldl -pthread -lm -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit
+FLAGS = -Wall -Wextra -Werror -Ofast
+LIBS = $(LIBMLX)/build/libmlx42.a -ldl -pthread -lm -framework Cocoa -framework OpenGL -framework IOKit
 
-CC = cc
+CC = gcc
 
 all: libmlx $(NAME)
 
 libmlx:
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
-$(NAME) : $(OBJ)
-	@$(CC) $(FLAGS) $(OBJ) $(LIBS) -o $(NAME)
+$(NAME) : $(OBJ) $(LIBFT)
+	@$(CC) $(FLAGS) $(OBJ) $(LIBS) $(LIBFT) -o $(NAME)
 	@printf "$(NAME) compiled\n"
 
-$(OBJ_DIR)/%.o: %.cpp | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
 	@$(CC) $(FLAGS) -o $@ -c $<
 
 $(OBJ_DIR):
 	@mkdir $(OBJ_DIR)
+
+$(LIBFT):
+	make -C libft
 
 clean:
 	@rm -rf $(OBJ_DIR)
