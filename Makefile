@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/11/21 14:37:39 by aolde-mo          #+#    #+#              #
+#    Updated: 2023/11/21 14:37:40 by aolde-mo         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = cub3d
 LIBMLX = ./MLX42
 LIBFT = libft/libft.a
@@ -26,13 +38,15 @@ $(OBJ_DIR):
 	@mkdir $(OBJ_DIR)
 
 $(LIBFT):
-	make -C libft
+	@make -C libft
 
 clean:
 	@rm -rf $(OBJ_DIR)
+	@make -C libft clean
 
 fclean:
 	@rm -rf $(OBJ_DIR) $(NAME)
+	@make -C libft fclean
 
 re: fclean all
 
