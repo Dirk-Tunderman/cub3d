@@ -6,17 +6,37 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:38:02 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/11/21 14:38:02 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/11/23 14:21:48 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# define NOWALL 0
+# define WALL 1
+
+# define mapWidth 24
+# define mapHeight 24
+# define screenWidth 1920
+# define screenHeight 1080
+
+# include "../MLX42/include/MLX42/MLX42.h"
+
+typedef struct	s_data{
+	mlx_t		*mlx;
+	mlx_image_t	*img;
+}				t_data;
+
 //main
 int		main(int argc, char **argv);
+//init
+void	init_data(t_data *data);
+void	init_img(t_data *data);
+//exit
+void	exit_cub3d(t_data *data);
 //check
-int		check_input(int argc, char **argv);
+void	check_input(int argc, char **argv);
 //error
 
 void	print_error(char *s);
