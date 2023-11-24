@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:38:02 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/11/23 14:21:48 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/11/24 10:35:30 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,20 @@ typedef struct	s_data{
 
 //main
 int		main(int argc, char **argv);
+
 //init
-void	init_data(t_data *data);
-void	init_img(t_data *data);
+void	initialize(t_data *data);
+
+//rayz
+void	raycasting(t_data *data);
+
 //exit
-void	exit_cub3d(t_data *data);
+void	cleanup(t_data *data);
+
 //check
 void	check_input(int argc, char **argv);
-//error
 
+//error
 void	print_error(char *s);
+
 #endif
