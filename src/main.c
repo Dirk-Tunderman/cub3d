@@ -6,13 +6,14 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 12:43:17 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/11/23 14:21:16 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/11/24 13:40:16 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 
 int worldMap[mapWidth][mapHeight]=
 {
@@ -49,13 +50,14 @@ void asd()
 
 int	main(int argc, char **argv)
 {
-	atexit(asd);
+	// atexit(asd);
 	t_data	*data;
 
 	data = malloc(sizeof(t_data));
-	check_input(argc, argv);
-	init_data(data);
-	init_img(data);
-	exit_cub3d(data);
-	return 0;
+	// check_input(argc, argv);
+	initialize(data);
+	raycasting(data);
+	mlx_loop(data->mlx);
+	cleanup(data);
+	return (0);
 }
