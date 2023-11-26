@@ -6,19 +6,19 @@
 #    By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/21 14:37:39 by aolde-mo          #+#    #+#              #
-#    Updated: 2023/11/23 14:28:33 by aolde-mo         ###   ########.fr        #
+#    Updated: 2023/11/26 16:20:12 by aolde-mo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 LIBMLX = ./MLX42
 LIBFT = libft/libft.a
-SRC = main.c error.c input_check.c init.c raycasting.c
+SRC = main.c error.c input_check.c init.c raycasting.c draw.c
 VPATH = src
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 OBJ_DIR = obj
-FLAGS = -Wall -Wextra -Werror -Ofast -Wunreachable-code
-FLAGS =
+CFLAGS = -Wall -Wextra -Werror -Ofast -Wunreachable-code -fsanitize=address
+CFLAGS =
 LIBS = $(LIBMLX)/build/libmlx42.a -L/Users/aolde-mo/.brew/opt/glfw/lib -lglfw -ldl -pthread -lm -framework Cocoa -framework OpenGL -framework IOKit
 
 CC = gcc
@@ -28,12 +28,12 @@ all: libmlx $(NAME)
 libmlx:
 	cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
-$(NAME) : $(OBJ) $(LIBFT)
-	@$(CC) $(FLAGS) $(OBJ) $(LIBS) $(LIBFT) -o $(NAME)
+$(NAME) : $(OBJ) $(LIBFT) inc/cub3d.h
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBS) $(LIBFT) -o $(NAME)
 	@printf "$(NAME) compiled\n"
 
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
-	@$(CC) $(FLAGS) -o $@ -c $<
+	@$(CC) $(CFLAGS) -o $@ -c $<
 
 $(OBJ_DIR):
 	@mkdir $(OBJ_DIR)
