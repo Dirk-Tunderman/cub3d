@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:23:37 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/11/24 13:49:32 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:25:59 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,51 +15,145 @@
 #include <math.h>
 #include <stdbool.h>
 
-//positions we know before calculating
-double x_pos = 22, y_pos = 12;
-double x_dir = -1, y_dir = 0;
-double x_plane = 0, y_plane = 0.66;
-
-//side_dist is the distance TO the first wall hit from x or y from the starting position
-double x_side_dist, y_side_dist;
-//delta_dist is the distance FROM the first wall hit to the next wall in the x or y axes
-double x_delta_dist, y_delta_dist;
-
-//camera plane
-double x_camera;
-double x_ray_dir, y_ray_dir;
-
-double x_perpendicular_wall_dist;
-
-
-bool	wall_is_hit = false;
-bool	north_south;
-
-void	raycasting(t_data *data)
+int world_map[mapWidth][mapHeight] =
 {
-	for (int x = 0; x < screenWidth; x++)
-	{
-		x_camera = 2 * x / screenWidth - 1;
-		x_ray_dir = x_dir + x_plane * x_camera;
-		y_ray_dir = y_dir + y_plane * x_camera;
-	}
-	calculate_delta_distance();
+// x ==  0,1,2,3,4,5,6,7,8,9						22,23
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}, //y == 0
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, // 1
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, // 2
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, // 3
+		{1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,1,0,1,0,1,0,0,0,1}, // 4
+		{1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1}, // 5
+		{1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1}, // 6
+		{1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1}, // 7
+		{1,0,0,0,0,0,1,1,0,1,1,0,0,0,0,1,0,1,0,1,0,0,0,1}, // 8
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, // 9
+		{1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, // 10
+		{1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, // 11 
+		{1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, // 12
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, // 13
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, // 14
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, // 15
+		{1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, // 16
+		{1,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, // 17
+		{1,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, // 18
+		{1,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, // 19
+		{1,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, // 20
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, // 21
+		{1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, // 22
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1} //y 23
+};
 
+
+#include <stdio.h>
+
+void	calculate_ray_direction(t_data *data, int x)
+{
+	t_ray		*ray;
+	t_player	*player;
+
+	ray = data->ray;
+	player = data->player;
+	ray->x_camera = 2 * x / (double)screenWidth - 1;
+	ray->x_ray_dir = player->x_dir + player->x_plane * ray->x_camera;
+	ray->y_ray_dir = player->y_dir + player->y_plane * ray->x_camera;
 }
 
 // calculates the nearest x or y wall from the first side distance.
 // if the ray goes straight along the x or y axes (the ray direction is zero) it will never reach an wall
-// so we put the difference to an large number (1e10 - 1 x 10^10).
-// also make the distance absolute. Since we care about the distance and a distance can not be negative.
-
-void	calculate_delta_distance()
+// so we put the difference to an large number (1e10 == 1 x 10^10).
+// also make the distance absolute. Since a distance can not be negative.
+void	calculate_delta_distance(t_ray *ray)
 {
-	if (x_ray_dir == 0)
-		x_delta_dist = 1e10;
+	if (ray->x_ray_dir == 0)
+		ray->x_delta_dist = 1e10;
 	else
-		x_delta_dist = fabs(1 / x_ray_dir);
-	if (y_ray_dir == 0)
-		y_delta_dist = 1e10;
+		ray->x_delta_dist = fabs(1 / ray->x_ray_dir);
+	if (ray->y_ray_dir == 0)
+		ray->y_delta_dist = 1e10;
 	else
-		y_delta_dist = fabs(1 / y_ray_dir);
+		ray->y_delta_dist = fabs(1 / ray->y_ray_dir);
+}
+
+// calculates the distance between the starting position and
+// the first wall in the x- and y-axis
+void	calculate_side_distance(t_player *player, t_ray *ray)
+{
+	ray->x_map = (int)player->x_pos;
+	ray->y_map = (int)player->y_pos;
+	if (ray->x_ray_dir < 0)
+	{
+		ray->x_step = -1;
+		ray->x_side_dist = (player->x_pos - ray->x_map) * ray->x_delta_dist;
+	}
+	else
+	{
+		ray->x_step = 1;
+		ray->x_side_dist = (ray->x_map + 1 - player->x_pos) * ray->x_delta_dist;
+	}
+	if (ray->y_ray_dir < 0)
+	{
+		ray->y_step = -1;
+		ray->y_side_dist = (player->y_pos - ray->y_map) * ray->y_delta_dist;
+	}
+	else
+	{
+		ray->y_step = 1;
+		ray->y_side_dist = (ray->y_map + 1 - player->y_pos) * ray->y_delta_dist;
+	}
+}
+
+
+
+void	dda(t_ray *ray)
+{
+	bool	wall_is_hit;
+
+	wall_is_hit = false;
+	while (!wall_is_hit)
+	{
+		if (ray->x_side_dist < ray->y_side_dist)
+		{
+			ray->x_side_dist += ray->x_delta_dist;
+			ray->x_map += ray->x_step;
+			ray->vertical_wall_hit = false;
+		}
+		else
+		{
+			ray->y_side_dist += ray->y_delta_dist;
+			ray->y_map += ray->y_step;
+			ray->vertical_wall_hit = true;
+		}
+		if (world_map[ray->y_map][ray->x_map] == 1)
+			wall_is_hit = true;
+	}
+}
+
+void	calculate_perpendicular_wall_dist(t_ray *ray)
+{
+	if (ray->vertical_wall_hit == true)
+		ray->perpendicular_wall_dist = ray->y_side_dist - ray->y_delta_dist;
+	else
+		ray->perpendicular_wall_dist = ray->x_side_dist - ray->x_delta_dist;
+}
+
+void	raycasting(t_data *data)
+{
+	t_player	*player;
+	t_ray		*ray;
+	int			x;
+
+	player = data->player;
+	ray = data->ray;
+	x = 0;
+	while (x < screenWidth)
+	{
+		calculate_ray_direction(data, x);
+		calculate_delta_distance(ray);
+		calculate_side_distance(player, ray);
+		dda(ray);
+		calculate_perpendicular_wall_dist(ray);
+		draw_line(data, ray->perpendicular_wall_dist, x);
+		x++;
+	}
 }
