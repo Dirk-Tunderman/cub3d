@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:38:02 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/11/26 16:25:28 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/11/27 14:20:56 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,9 @@ void	calculate_delta_distance(t_ray *ray);
 void	calculate_side_distance(t_player *player, t_ray *ray);
 void	dda(t_ray *ray);
 void	calculate_perpendicular_wall_dist(t_ray *ray);
+
+//draw
+void	draw_line(t_data *data, double wall_dist, int x_pixel);
 //exit
 void	cleanup(t_data *data);
 
