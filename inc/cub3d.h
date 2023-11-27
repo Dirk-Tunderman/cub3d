@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:38:02 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/11/27 14:20:56 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:50:04 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,9 @@ void	calculate_perpendicular_wall_dist(t_ray *ray);
 
 //draw
 void	draw_line(t_data *data, double wall_dist, int x_pixel);
+
+//hooks
+void	key_hooks(t_data *data);
 //exit
 void	cleanup(t_data *data);
 
