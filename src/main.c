@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 12:43:17 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/11/26 15:14:27 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/11/27 14:33:57 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int argc, char **argv)
 	// check_input(argc, argv);
 	initialize(data);
 	raycasting(data);
-	// mlx_loop(data->mlx);
-	// cleanup(data);
+	mlx_loop(data->mlx);
+	cleanup(data);
 	return (0);
 }

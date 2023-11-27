@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 11:09:47 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/11/26 16:18:22 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/11/27 14:40:33 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 
 void	init_player(t_player *player)
 {
-	player->x_pos = 18;
-	player->y_pos = 12;
-	player->x_dir = -1;
+	player->x_pos = 6;
+	player->y_pos = 11;
+	player->x_dir = 1;
 	player->y_dir = 0;
 	player->x_plane = 0;
 	player->y_plane = 0.66;
