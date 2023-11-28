@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:38:02 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/11/27 15:50:04 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/11/28 19:32:20 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 # define screenHeight 1080
 
 # include "../MLX42/include/MLX42/MLX42.h"
+
+extern int world_map[mapWidth][mapHeight];
+
 
 // positions we know before calculating
 typedef struct	s_player{
