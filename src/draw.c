@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:48:11 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/11/27 17:22:55 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2023/11/28 18:50:56 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,7 @@ int	get_rgba(int g)
 #include <stdio.h>
 void	draw_line(t_data *data, double wall_dist, int x_pixel)
 {
-	// if (wall_dist < 0)
-	// 	wall_dist = 1;
 	int	pixel_height = (int)((double)screenHeight / wall_dist);
-	if (pixel_height > screenHeight / 10 * 8)
-		pixel_height = screenHeight / 10 * 9;
 	int	floor_ceiling_height = (screenHeight - pixel_height) / 2;
 	int y = 0;
 	while (y < floor_ceiling_height)
