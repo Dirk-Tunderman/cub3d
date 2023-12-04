@@ -69,7 +69,7 @@ void	rotate(t_data *data, t_player *player)
 	}
 	raycasting(data);
 }
-
+#include <stdlib.h>
 #include <stdio.h>
 void	execute_key(t_data *data)
 {

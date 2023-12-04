@@ -75,12 +75,15 @@ void	calculate_delta_distance(t_ray *ray)
 		ray->y_delta_dist = fabs(1 / ray->y_ray_dir);
 }
 
+#include <stdlib.h>
 // calculates the distance between the starting position and
 // the first wall in the x- and y-axis
 void	calculate_side_distance(t_player *player, t_ray *ray)
 {
 	ray->x_map = (int)player->x_pos;
 	ray->y_map = (int)player->y_pos;
+	if (world_map[ray->y_map][ray->x_map] == 1)
+		exit(1);
 	if (ray->x_ray_dir < 0)
 	{
 		ray->x_step = -1;
@@ -136,6 +139,8 @@ void	calculate_perpendicular_wall_dist(t_ray *ray)
 	else
 		ray->perpendicular_wall_dist = ray->x_side_dist - ray->x_delta_dist;
 }
+
+#include <stdlib.h>
 
 void	raycasting(t_data *data)
 {

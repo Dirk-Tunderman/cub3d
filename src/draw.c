@@ -31,6 +31,8 @@ void	draw_line(t_data *data, double wall_dist, int x_pixel)
 {
 	int	pixel_height = (int)((double)screenHeight / wall_dist);
 	int	floor_ceiling_height = (screenHeight - pixel_height) / 2;
+	if (floor_ceiling_height < 0)
+		floor_ceiling_height = 0;
 	int y = 0;
 	while (y < floor_ceiling_height)
 		mlx_put_pixel(data->img, x_pixel, y++, get_rgba(220));
