@@ -37,9 +37,15 @@ void	initialize(t_data *data)
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 }
 
+void	close_mlx(t_data *data)
+{
+	mlx_close_window(data->mlx);
+	mlx_delete_image(data->mlx, data->img);
+}
+
 void	cleanup(t_data *data)
 {
-	mlx_delete_image(data->mlx, data->img);
-	mlx_terminate(data->mlx);
+	free(data->player);
+	free(data->ray);
 	free(data);
 }

@@ -17,6 +17,9 @@
 #define MOVE_SPEED 0.125
 #define ROTATE_SPEED 0.0625
 
+#define POV_MIN 0.2
+#define POV_MAX 1.0
+
 int wworld_map[mapWidth][mapHeight] =
 {
 // x ==  0,1,2,3,4,5,6,7,8,9						22,23
@@ -71,7 +74,7 @@ void	rotate(t_data *data, t_player *player)
 }
 #include <stdlib.h>
 #include <stdio.h>
-void	execute_key(t_data *data)
+void	move(t_data *data)
 {
 	t_player	*player;
 	double		tmp_x;
@@ -79,13 +82,13 @@ void	execute_key(t_data *data)
 	int			sign;
 
 	player = data->player;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_UP))
+	if (mlx_is_key_down(data->mlx, MLX_KEY_W))
 		sign = 1;
 	else
 		sign = -1;
 	tmp_x = player->x_pos + player->x_dir * MOVE_SPEED * 1 * sign;
 	tmp_y = player->y_pos + player->y_dir * MOVE_SPEED * 1 * sign;
-	printf("x %lf\t y %lf\txi %d\t yi %d\n", tmp_x, tmp_y, (int)tmp_x, (int)tmp_y);
+	//making temporaly x and y position to check for wall collisions
 	if (wworld_map[(int)tmp_y][(int)tmp_x] == 1)
 		return;
 	player->x_pos = tmp_x;
@@ -99,12 +102,14 @@ void	key_hook(void *param)
 	t_data	*data;
 
 	data = param;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_UP)
-		|| mlx_is_key_down(data->mlx, MLX_KEY_DOWN))
-		execute_key(data);
+	if (mlx_is_key_down(data->mlx, MLX_KEY_W)
+		|| mlx_is_key_down(data->mlx, MLX_KEY_S))
+		move(data);
 	else if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT)
 		|| mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
 		rotate(data, data->player);
+	else if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
+		close_mlx(data);
 }
 
 void	key_hooks(t_data *data)

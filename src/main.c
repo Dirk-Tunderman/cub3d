@@ -15,14 +15,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void asd()
-{
-	system("leaks cub3d");
-}
-
 int	main(int argc, char **argv)
 {
-	// atexit(asd);
 	t_data	*data;
 
 	data = malloc(sizeof(t_data));
@@ -31,6 +25,7 @@ int	main(int argc, char **argv)
 	raycasting(data);
 	key_hooks(data);
 	mlx_loop(data->mlx);
+	mlx_terminate(data->mlx);
 	cleanup(data);
 	return (0);
 }

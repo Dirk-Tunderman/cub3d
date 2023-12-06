@@ -82,8 +82,6 @@ void	calculate_side_distance(t_player *player, t_ray *ray)
 {
 	ray->x_map = (int)player->x_pos;
 	ray->y_map = (int)player->y_pos;
-	if (world_map[ray->y_map][ray->x_map] == 1)
-		exit(1);
 	if (ray->x_ray_dir < 0)
 	{
 		ray->x_step = -1;
