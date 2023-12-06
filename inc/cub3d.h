@@ -90,6 +90,7 @@ void	draw_line(t_data *data, double wall_dist, int x_pixel);
 //hooks
 void	key_hooks(t_data *data);
 //exit
+void	close_mlx(t_data *data);
 void	cleanup(t_data *data);
 
 //check
