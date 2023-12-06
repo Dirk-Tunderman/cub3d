@@ -20,7 +20,7 @@ int	main(int argc, char **argv)
 	t_data	*data;
 
 	data = malloc(sizeof(t_data));
-	// check_input(argc, argv);
+	check_input(argc, argv);
 	initialize(data);
 	raycasting(data);
 	key_hooks(data);

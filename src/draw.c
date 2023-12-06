@@ -17,11 +17,9 @@
 int	get_rgba(int g)
 {
 	int	r;
-	int	asd;
 	int	b;
 
 	r = 255;
-	asd = g;
 	b = 255;
 	return (r << 24 | g << 16 | b << 8 | 255);
 }
