@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:23:37 by aolde-mo          #+#    #+#             */
-/*   Updated: 2023/11/28 19:33:49 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2024/01/27 15:15:09 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	dda(t_ray *ray)
 			ray->y_map += ray->y_step;
 			ray->vertical_wall_hit = true;
 		}
-		if (world_map[ray->y_map][ray->x_map] == 1)
+		if (world_map[ray->y_map][ray->x_map] == WALL)
 			wall_is_hit = true;
 	}
 }
@@ -139,6 +139,7 @@ void	calculate_perpendicular_wall_dist(t_ray *ray)
 }
 
 #include <stdlib.h>
+
 
 void	raycasting(t_data *data)
 {
