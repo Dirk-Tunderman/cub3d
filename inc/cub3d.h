@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:38:02 by aolde-mo          #+#    #+#             */
-/*   Updated: 2024/01/20 10:49:13 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2024/01/27 15:12:50 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 # define screenHeight 1080
 
 # include "../MLX42/include/MLX42/MLX42.h"
+
+#include <stdio.h>
+#include <stdlib.h>
 
 extern int world_map[mapWidth][mapHeight];
 
@@ -60,16 +63,34 @@ typedef struct	s_ray{
 // negative or positive step direction
 	int			x_step;
 	int			y_step;
+// on which x the ray hits the wall
+	double		x_wall;
+// x of the texture we should use
+	int			x_texture;
+// whether vertical wall is hit
 	bool		vertical_wall_hit;
 }				t_ray;
 
 typedef struct	s_data{
-	mlx_t		*mlx;
-	mlx_image_t	*img;
-	t_player	*player;
-	t_ray		*ray;
-}				t_data;
+	mlx_t			*mlx;
+	mlx_image_t		*img;
+	mlx_texture_t	*texture;
+	t_player		*player;
+	t_ray			*ray;
+	uint8_t			**pixels_arr;
+	int				draw_start;
+	int				draw_end;
+}					t_data;
 
+typedef enum	e_directions
+{
+	LEFT,
+	RIGHT,
+	FORWARD,
+	BACKWARD,
+	ROTATE_LEFT,
+	ROTATE_RIGHT,
+}				t_directions;
 //main
 int		main(int argc, char **argv);
 
@@ -85,7 +106,10 @@ void	dda(t_ray *ray);
 void	calculate_perpendicular_wall_dist(t_ray *ray);
 
 //draw
-void	draw_line(t_data *data, double wall_dist, int x_pixel);
+void		draw_line(t_data *data, double wall_dist, int x_pixel);
+void		put_stripe(t_data *data, int pixel_height, int x, int y);
+uint32_t	get_rgba(uint32_t g);
+uint32_t	get_pixel_rgba(uint8_t *arr);
 
 //hooks
 void	key_hook(void *param);
@@ -96,7 +120,11 @@ void	cleanup(t_data *data);
 //check
 void	check_input(int argc, char **argv);
 
-//errorß
+//error
 void	print_error(char *s);
+
+//texture parsing
+
+void	texture_to_doubleptr(t_data *data);
 
 #endif
