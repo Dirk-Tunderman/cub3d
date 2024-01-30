@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:38:02 by aolde-mo          #+#    #+#             */
-/*   Updated: 2024/01/27 15:12:50 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2024/01/30 08:20:56 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,18 @@ typedef struct	s_ray{
 typedef struct	s_data{
 	mlx_t			*mlx;
 	mlx_image_t		*img;
-	mlx_texture_t	*texture;
 	t_player		*player;
 	t_ray			*ray;
-	uint8_t			**pixels_arr;
+	
+	mlx_texture_t	**text_arr;
+	uint8_t			***pixels;
+	
+	int				line_height;
 	int				draw_start;
 	int				draw_end;
 }					t_data;
 
-typedef enum	e_directions
+typedef enum	e_movement
 {
 	LEFT,
 	RIGHT,
@@ -90,7 +93,16 @@ typedef enum	e_directions
 	BACKWARD,
 	ROTATE_LEFT,
 	ROTATE_RIGHT,
-}				t_directions;
+}				t_movement;
+
+typedef enum	e_direction
+{
+	NORTH,
+	EAST,
+	SOUTH,
+	WEST,
+}				t_direction;
+
 //main
 int		main(int argc, char **argv);
 
@@ -106,8 +118,8 @@ void	dda(t_ray *ray);
 void	calculate_perpendicular_wall_dist(t_ray *ray);
 
 //draw
-void		draw_line(t_data *data, double wall_dist, int x_pixel);
-void		put_stripe(t_data *data, int pixel_height, int x, int y);
+void		draw_line(t_data *data, int x);
+void		put_stripe(t_data *data, int x, int y);
 uint32_t	get_rgba(uint32_t g);
 uint32_t	get_pixel_rgba(uint8_t *arr);
 
@@ -122,6 +134,9 @@ void	check_input(int argc, char **argv);
 
 //error
 void	print_error(char *s);
+
+//utils
+int	check_direction(t_data *data);
 
 //texture parsing
 

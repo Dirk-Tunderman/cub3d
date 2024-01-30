@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:23:37 by aolde-mo          #+#    #+#             */
-/*   Updated: 2024/01/27 15:15:09 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2024/01/30 08:26:53 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void	raycasting(t_data *data)
 		calculate_side_distance(player, ray);
 		dda(ray);
 		calculate_perpendicular_wall_dist(ray);
-		draw_line(data, ray->perpendicular_wall_dist, x);
+		draw_line(data, x);
 		x++;
 	}
 }
