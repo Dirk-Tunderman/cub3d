@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:38:02 by aolde-mo          #+#    #+#             */
-/*   Updated: 2024/01/30 08:20:56 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2024/01/30 18:38:34 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # define screenHeight 1080
 
 # include "../MLX42/include/MLX42/MLX42.h"
+# include "../libft/libft.h"
+# include "get_next_line.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -83,6 +85,16 @@ typedef struct	s_data{
 	int				line_height;
 	int				draw_start;
 	int				draw_end;
+
+	int				**map;
+	char			*WE;
+	char			*NO;
+	char			*SO;
+	char			*EA;
+	uint32_t		*F;
+	uint32_t		*C;
+	int				x_player;
+	int				y_player;
 }					t_data;
 
 typedef enum	e_movement
@@ -115,13 +127,10 @@ void	calculate_ray_direction(t_data *data, int x);
 void	calculate_delta_distance(t_ray *ray);
 void	calculate_side_distance(t_player *player, t_ray *ray);
 void	dda(t_ray *ray);
-void	calculate_perpendicular_wall_dist(t_ray *ray);
 
 //draw
 void		draw_line(t_data *data, int x);
 void		put_stripe(t_data *data, int x, int y);
-uint32_t	get_rgba(uint32_t g);
-uint32_t	get_pixel_rgba(uint8_t *arr);
 
 //hooks
 void	key_hook(void *param);
@@ -133,13 +142,63 @@ void	cleanup(t_data *data);
 void	check_input(int argc, char **argv);
 
 //error
+void	*ft_malloc(size_t size);
 void	print_error(char *s);
 
 //utils
-int	check_direction(t_data *data);
-
-//texture parsing
-
+int		find_direction(t_data *data);
+void	calculate_draw_vars(t_data *data);
+void	free_textures(t_data *data, int texture);
 void	texture_to_doubleptr(t_data *data);
+
+# include "../MLX42/include/MLX42/MLX42.h"
+# include <stdio.h>
+# include <string.h>
+# include <stdlib.h>
+
+//open the file
+bool is_map_line(char *line);
+
+//error check
+bool starts_with_map_char(const char *line);
+int find_first_line_map(char **original_array);
+char **extract_map(char **original_array, int original_height);
+int calculate_original_height(char **array);
+void 	error_check(char **old_map, int height);
+int get_l_line(char **array);
+
+
+//----------------------------- PARSING -----------------------------//
+
+int check_position(char *line, char *dir);
+int check_three_variables(char *line);
+int check_top_map(char **cub, int f_l);
+int find_first_line_mapp(char **original_array); // does not take into consideration map error
+int    parsing(char **twod);
+char *str_n_copy(const char *src, int start);
+int check_position_c(char *line, char *dir);
+int ft_isspace(int c);
+int is_valid_format(const char *str);
+int validate_numbers_in_range(const char *str);
+
+//------------------------------FINAL PARSE---------------------------//
+void    final_parse(t_data *data, char **cub);
+void process_wall_textures(t_data *data, char **cub);
+int parse_int(const char **str);
+uint32_t rgb_to_uint32(const char *rgb_str);
+void process_floor_ceiling_colors(t_data *data, char **cub);
+char *ft_strdup(const char *s);
+void parse_rgb_values(uint32_t *color_array, const char *rgb_str);
+void process_map(t_data *data, char **cub);
+int char_to_int(char c);
+void print_map(int **map, int rows, int cols);
+void print_player_coordinates(int x, int y);
+void calculate_map_dimensions(char **cub, int *rows, int *cols);
+
+static char **process_line(char **array, char *line, int *num_rows);
+static char **resize_array(char **array, int *capacity, int num_rows);
+static char **initialize_array(int *capacity);
+char **read_cub_file_to_2d_array(const char *filename, int *num_rows);
+int count_rows_in_file(const char *filename);
 
 #endif
