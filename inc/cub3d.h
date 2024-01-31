@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:38:02 by aolde-mo          #+#    #+#             */
-/*   Updated: 2024/01/31 10:45:54 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2024/01/31 10:57:08 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct	s_data{
 	uint32_t		*C;
 	int				x_player;
 	int				y_player;
+	t_direction		start_direction;
 }					t_data;
 
 typedef enum	e_movement
