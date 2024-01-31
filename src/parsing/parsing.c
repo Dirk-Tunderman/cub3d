@@ -456,7 +456,6 @@ int check_player(char **cub, int start, t_data *data)
     int i = 0;
     int p = 0;
 
-
     while (cub[start] != NULL)
     {
         while (cub[start][i] != '\0')
