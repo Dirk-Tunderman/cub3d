@@ -6,7 +6,7 @@
 /*   By: dtunderm <dtunderm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 12:43:17 by aolde-mo          #+#    #+#             */
-/*   Updated: 2024/01/31 11:50:12 by dtunderm         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:13:28 by dtunderm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,11 @@ int	main(int argc, char **argv)
         printf("Error: Invalid map.\n");
         return (-1);
     }
+	printf("x-player: %d\n\n", data->x_player);
+	printf("y-player: %d\n\n", data->y_player);
     final_parse(data, cub_data);
+	printf("x-player: %d\n\n", data->x_player);
+	printf("y-player: %d\n\n", data->y_player);
 	initialize(data);
 	game(data);
 	cleanup(data);

@@ -450,7 +450,7 @@ void    get_start_direction(char c, t_data *data)
 
 }
 
-int check_player(char **cub, int start, t_data data)
+int check_player(char **cub, int start, t_data *data)
 {
     //loop though the whole map
     int i = 0;
@@ -463,10 +463,15 @@ int check_player(char **cub, int start, t_data data)
         {
             if (cub[start][i] == 'E' || cub[start][i] == 'W' || cub[start][i] == 'N' || cub[start][i] == 'S')
             {
-                data.x_player = i;
-                data.y_player = start;
-                get_start_direction(cub[start][i], &data);
-                printf("start direction = %d", data.start_direction);
+                printf("i = %d\n", i);
+                data->x_player = i;
+                printf("data.x_player = %d\n", data->x_player);
+                printf("start = %d\n", start);
+                data->y_player = start;
+                printf("cube[start][i] = %c\n", cub[start][i]);
+                cub[start][i] = '0';
+                get_start_direction(cub[start][i], data);
+                printf("start direction = %d", data->start_direction);
                 p++;
             }
             i++;
@@ -498,7 +503,7 @@ int check_map(char **cub, int f_l, t_data *data)
     error = check_endings_map(cub, f_l);
     if (error == -1)
         return -1;
-    error = check_player(cub, f_l, *data);
+    error = check_player(cub, f_l, data);
     if (error == -1)
         return -1;
     return error;
