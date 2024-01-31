@@ -32,7 +32,8 @@ int check_position(char *line, char *dir)
 {
     // check if the string dir is on the first occurence in the string
     // skip spaces and tabs
-
+    printf("line: %s\n", line);
+    printf("dir=  %s\n", dir);
     int i = 0;
     int j = 0;
     while (line[i] == ' ' || line[i] == '\t')
@@ -56,12 +57,13 @@ int check_position(char *line, char *dir)
     char *str = NULL;
     str = str_n_copy(line, i);
 
-    fd = open(str, O_RDONLY);
-    if (fd == -1)
-    {
-        free(str);
-        return 1;
-    }
+    // fd = open(str, O_RDONLY);
+    // if (fd == -1)
+    // {
+    //     printf("e")
+    //     free(str);
+    //     return 1;
+    // }
     free(str);
     return 0;
 }
@@ -222,6 +224,8 @@ int check_top_map(char **cub, int f_l)
         }
         if (ft_strnstr(cub[i], "WE ", ft_strlen(cub[i])))
         {
+            printf("WE\n");
+            printf("cub[i] = %s", cub[i]);
             error = check_position(cub[i], "WE ");
             if (error == 1)
                 return -1;
@@ -485,12 +489,18 @@ int    parsing(char **twod) {
     //check above map
     error = check_top_map(twod, f_l);
     if (error == -1)
+    {
+        printf("error top map");
         return -1;
+    }
 
 
     error = check_map(twod, f_l);
     if (error == -1)
+    {
+        printf("error low map");
         return -1;
+    }
 
     printf("error = %d\n", error);
 

@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:23:37 by aolde-mo          #+#    #+#             */
-/*   Updated: 2024/01/30 18:50:12 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2024/01/31 10:45:49 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	calculate_side_distance(t_player *player, t_ray *ray)
 // horizantal or vertical wall (it can switch up).
 // with every step we take we check if we've reached a wall and
 // when a wall is hit we calculate how far the wall is.
-void	dda(t_ray *ray)
+void	dda(t_data *data, t_ray *ray)
 {
 	bool	wall_is_hit;
 
@@ -117,7 +117,7 @@ void	raycasting(t_data *data)
 		calculate_ray_direction(data, x);
 		calculate_delta_distance(ray);
 		calculate_side_distance(player, ray);
-		dda(ray);
+		dda(data, ray);
 		draw_line(data, x);
 		x++;
 	}

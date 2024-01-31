@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:38:02 by aolde-mo          #+#    #+#             */
-/*   Updated: 2024/01/30 18:38:34 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2024/01/31 10:45:54 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	raycasting(t_data *data);
 void	calculate_ray_direction(t_data *data, int x);
 void	calculate_delta_distance(t_ray *ray);
 void	calculate_side_distance(t_player *player, t_ray *ray);
-void	dda(t_ray *ray);
+void	dda(t_data *data, t_ray *ray);
 
 //draw
 void		draw_line(t_data *data, int x);

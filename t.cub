@@ -1,0 +1,15 @@
+WE ./textures/naziwallpaper_north.xpm
+NO ./textures/naziwallpaper_north.xpm
+SO ./textures/naziwallpaper_north.xpm
+EA ./textures/naziwallpaper_north.xpm
+
+
+F 0,200,0
+C 255,25,45
+
+
+1111111
+1000001
+100P001
+1000001
+1111111

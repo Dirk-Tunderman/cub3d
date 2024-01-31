@@ -6,7 +6,7 @@
 /*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:48:11 by aolde-mo          #+#    #+#             */
-/*   Updated: 2024/01/30 18:11:59 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2024/01/31 10:54:39 by aolde-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,10 @@
 
 #include <stdio.h>
 
-uint32_t	get_floor_ceiling_rgba(uint32_t g)
+uint32_t	get_floor_ceiling_rgba(uint32_t *flor_clng)
 {
-	int	r;
-	int	b;
-
-	r = 255;
-	b = 255;
-	return (r << 24 | g << 16 | b << 8 | 255);
+	return (flor_clng[0] << 24 | flor_clng[1] << 16 | flor_clng[2] << 8 | 255);
 }
-
-// uint32_t	get_floor_ceiling_rgba(uint32_t *flor_clng)
-// {
-// 	return (flor_clng[0] << 24 | flor_clng[1] << 16 | flor_clng[2] << 8 | 255);
-// }
 
 uint32_t	get_pixel_rgba(uint8_t *arr)
 {
@@ -85,9 +75,9 @@ void	draw_line(t_data *data, int x)
 	y = 0;
 	calculate_draw_vars(data);
 	while (y < data->draw_start)
-		mlx_put_pixel(data->img, x, y++, get_floor_ceiling_rgba(212));
+		mlx_put_pixel(data->img, x, y++, get_floor_ceiling_rgba(data->F));
 	put_stripe(data, x, y);
 	y += data->draw_end - data->draw_start;
 	while (y < screenHeight)
-		mlx_put_pixel(data->img, x, y++, get_floor_ceiling_rgba(112));
+		mlx_put_pixel(data->img, x, y++, get_floor_ceiling_rgba(data->C));
 }

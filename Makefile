@@ -6,7 +6,7 @@
 #    By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/21 14:37:39 by aolde-mo          #+#    #+#              #
-#    Updated: 2024/01/30 18:37:08 by aolde-mo         ###   ########.fr        #
+#    Updated: 2024/01/31 10:47:11 by aolde-mo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,12 @@ LIBFT = libft/libft.a
 SRC = main.c error.c input_check.c utils.c init.c raycasting.c draw.c hooks.c \
 		error_check.c get_next_line_utils.c final_parse.c get_next_line.c main2.c parsing.c
 # SRC = test.c
-VPATH = src src/execute src/parsing
+VPATH = src/ src/execute src/parsing
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 OBJ_DIR = obj
 CFLAGS = -Ofast
 # CFLAGS = -Ofast -fsanitize=address -g -Wall -Wextra -Werror
-# CFLAGS = -Ofast -fsanitize=address
+# CFLAGS = -Ofast -fsanitize=address -g
 # CFLAGS =
 LIBS = $(LIBMLX)/build/libmlx42.a -L/Users/aolde-mo/.brew/opt/glfw/lib -lglfw -ldl -pthread -lm -framework Cocoa -framework OpenGL -framework IOKit
 
