@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+         #
+#    By: dtunderm <dtunderm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/21 14:37:39 by aolde-mo          #+#    #+#              #
-#    Updated: 2024/01/31 10:47:11 by aolde-mo         ###   ########.fr        #
+#    Updated: 2024/01/31 11:55:08 by dtunderm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ CFLAGS = -Ofast
 # CFLAGS = -Ofast -fsanitize=address -g -Wall -Wextra -Werror
 # CFLAGS = -Ofast -fsanitize=address -g
 # CFLAGS =
-LIBS = $(LIBMLX)/build/libmlx42.a -L/Users/aolde-mo/.brew/opt/glfw/lib -lglfw -ldl -pthread -lm -framework Cocoa -framework OpenGL -framework IOKit
+LIBS = $(LIBMLX)/build/libmlx42.a -L/Users/dtunderm/.brew/opt/glfw/lib -lglfw -ldl -pthread -lm -framework Cocoa -framework OpenGL -framework IOKit
 
 CC = gcc
 

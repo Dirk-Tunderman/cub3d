@@ -318,9 +318,17 @@ int check_up_and_main(char *main, char *up)
 
     while (i < len_main)
     {
-       if (main[i] == '0')
+       if (main[i] == '0' || main[i] == 'N' || main[i] == 'S' || main[i] == 'E' || main[i] == 'W')
         {
-            if (i >= len_up || up[i] == ' ')
+            if (i >= len_up || up[i] == ' ' || main[i + 1] == ' ' || main[i - 1] == ' ')
+            {
+                printf("i = %d\n", i);
+                return -1;
+            }
+        }
+        if (main[i] == ' ')
+        {
+            if (up[i] == '0' || up[i] == 'N' || up[i] == 'S' || up[i] == 'E' || up[i] == 'W')
             {
                 printf("i = %d\n", i);
                 return -1;
@@ -350,7 +358,7 @@ int check_map_loop(char **cub, int f_l)
 }
 
 
-int check_ends_line(char *line)
+int check_ends_line(char *line, int start)
 {
     int i = 0;
 
@@ -361,9 +369,13 @@ int check_ends_line(char *line)
         printf("begiiining not 1\n");
         return -1;
     }
-    while (line[i] == '1' || line[i] == '0' || line[i] == 'P')
+    while (line[i] == '1' || line[i] == '0' || 
+            line[i] == 'N' || line[i] == 'S' || 
+                line[i] == 'E' || line[i] == 'W' || line[i] == ' ') // as long as it is a wall, open space or player
+    {
         i++;
-    if (line[i - 1] != '1')
+    }
+    if (line[i - 1] != '1') // if the last character is not a wall
     {
         printf("line[i] = %c\n", line[i]);
         printf("end not 1\n");
@@ -372,7 +384,10 @@ int check_ends_line(char *line)
     while (line[i] == ' ' || line[i] == '\t')
         i++;
     if (line[i] != '\0')
+    {
+        printf("end not \\0\n");
         return -1;
+    }
     
     return 1;
 }
@@ -385,7 +400,7 @@ int check_last_line(char *line)
         i++;
     if (line[i] != '1')
         return -1;
-    while (line[i] == '1')
+    while (line[i] == '1' || line[i] == ' ')
         i++;
     while (line[i] == ' ' || line[i] == '\t')
         i++;
@@ -401,43 +416,74 @@ int check_endings_map(char **cub, int start)
     start++; // skip firstline
     while (cub[start] != NULL)
     {
-        error = check_ends_line(cub[start]);
+        error = check_ends_line(cub[start], start);
         printf("cub[start] = %s\n", cub[start]);
         printf("error in endings = %d\n", error);
         if (error == -1)
+        {
+            printf("error in endingzzzz\n");
             return -1;
+        }
         start++;
     }
     error = check_last_line(cub[start - 1]);
     if (error == -1)
+    {
+        printf("error in last line\n");
         return -1;
+    }
+    printf("finished check endings\n");
     return 1;
 }
 
-int check_player(char **cub, int start)
+
+void    get_start_direction(char c, t_data *data)
+{
+    if (c == 'N')
+        data->start_direction = NORTH;
+    if (c == 'S')
+        data->start_direction = SOUTH;
+    if (c == 'E')
+        data->start_direction = EAST;
+    if (c == 'W')
+        data->start_direction = WEST;
+
+}
+
+int check_player(char **cub, int start, t_data data)
 {
     //loop though the whole map
     int i = 0;
     int p = 0;
 
+
     while (cub[start] != NULL)
     {
         while (cub[start][i] != '\0')
         {
-            if (cub[start][i] == 'P')
+            if (cub[start][i] == 'E' || cub[start][i] == 'W' || cub[start][i] == 'N' || cub[start][i] == 'S')
+            {
+                data.x_player = i;
+                data.y_player = start;
+                get_start_direction(cub[start][i], &data);
+                printf("start direction = %d", data.start_direction);
                 p++;
+            }
             i++;
         }
         i = 0;
         start++;
     }
     if (p != 1)
+    {
+        printf("p = %d\n", p);
         return -1;
+    }
     return 1;
 }
 
 
-int check_map(char **cub, int f_l)
+int check_map(char **cub, int f_l, t_data *data)
 {
     int error = 0;
 
@@ -452,7 +498,7 @@ int check_map(char **cub, int f_l)
     error = check_endings_map(cub, f_l);
     if (error == -1)
         return -1;
-    error = check_player(cub, f_l);
+    error = check_player(cub, f_l, *data);
     if (error == -1)
         return -1;
     return error;
@@ -479,7 +525,7 @@ int find_first_line_mapp(char **original_array) // does not take into considerat
 }
 
 
-int    parsing(char **twod) {
+int    parsing(char **twod, t_data *data) {
 
     int error = 0;
     int f_l = 0;
@@ -495,7 +541,7 @@ int    parsing(char **twod) {
     }
 
 
-    error = check_map(twod, f_l);
+    error = check_map(twod, f_l, data);
     if (error == -1)
     {
         printf("error low map");

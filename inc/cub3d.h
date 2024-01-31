@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolde-mo <aolde-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dtunderm <dtunderm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:38:02 by aolde-mo          #+#    #+#             */
-/*   Updated: 2024/01/31 10:57:08 by aolde-mo         ###   ########.fr       */
+/*   Updated: 2024/01/31 11:53:51 by dtunderm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,14 @@ typedef struct	s_ray{
 	bool		vertical_wall_hit;
 }				t_ray;
 
+typedef enum	e_direction
+{
+	NORTH,
+	EAST,
+	SOUTH,
+	WEST,
+}				t_direction;
+
 typedef struct	s_data{
 	mlx_t			*mlx;
 	mlx_image_t		*img;
@@ -108,13 +116,6 @@ typedef enum	e_movement
 	ROTATE_RIGHT,
 }				t_movement;
 
-typedef enum	e_direction
-{
-	NORTH,
-	EAST,
-	SOUTH,
-	WEST,
-}				t_direction;
 
 //main
 int		main(int argc, char **argv);
@@ -175,7 +176,7 @@ int check_position(char *line, char *dir);
 int check_three_variables(char *line);
 int check_top_map(char **cub, int f_l);
 int find_first_line_mapp(char **original_array); // does not take into consideration map error
-int    parsing(char **twod);
+int    parsing(char **twod, t_data *data);
 char *str_n_copy(const char *src, int start);
 int check_position_c(char *line, char *dir);
 int ft_isspace(int c);
@@ -191,7 +192,7 @@ void process_floor_ceiling_colors(t_data *data, char **cub);
 char *ft_strdup(const char *s);
 void parse_rgb_values(uint32_t *color_array, const char *rgb_str);
 void process_map(t_data *data, char **cub);
-int char_to_int(char c);
+int char_to_int(char c, t_data *data);
 void print_map(int **map, int rows, int cols);
 void print_player_coordinates(int x, int y);
 void calculate_map_dimensions(char **cub, int *rows, int *cols);
@@ -201,5 +202,7 @@ static char **resize_array(char **array, int *capacity, int num_rows);
 static char **initialize_array(int *capacity);
 char **read_cub_file_to_2d_array(const char *filename, int *num_rows);
 int count_rows_in_file(const char *filename);
+void    get_start_direction(char c, t_data *data);
+
 
 #endif

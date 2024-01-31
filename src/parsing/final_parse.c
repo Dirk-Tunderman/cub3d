@@ -145,9 +145,9 @@ void process_wall_textures(t_data *data, char **cub) {
 
 
 
-int char_to_int(char c) {
+int char_to_int(char c, t_data *data) {
     if (c == '1') return 1;
-    if (c == '0' || c == ' ' || c == 'P') return 0;
+    if (c == '0' || c == ' ' || (c >= 0 && c <= 3)) return 0;
     return -1; // For any unexpected character
 }
 
@@ -176,12 +176,8 @@ void process_map(t_data *data, char **cub) {
         for (j = 0; j < cols; j++) {
             // Using map_start in the logic
             char c = j < (int)strlen(cub[map_start + i]) ? cub[map_start + i][j] : ' ';
-            data->map[i][j] = char_to_int(c);
+            data->map[i][j] = char_to_int(c, data);
 
-            if (c == 'P') {
-                data->x_player = j;
-                data->y_player = i;
-            }
         }
     }
 }
